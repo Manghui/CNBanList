@@ -31,7 +31,7 @@ namespace CNBanList
             {
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true,
-                Name = "SCPSCP: CNBanList Downloader"
+                Name = "SCPSL: CNBanList Downloader"
             };
             DownloadThread.Start();
             EventManager.RegisterEvents(this);
