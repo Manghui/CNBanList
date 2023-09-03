@@ -41,32 +41,30 @@ namespace CNBanList
         {
             try
             {
+                HttpClient httpClient = new HttpClient();
                 BanList = new List<BanInfo>();
                 while (true)
                 {
-                    using (HttpClient httpClient = new HttpClient())
+                    try
                     {
-                        try
+                        HttpResponseMessage response = httpClient.GetAsync(string.Format("https://api.manghui.net/t/getbanlist?time={0}", timestamp)).Result;
+                        HttpStatusCode statusCode = response.StatusCode;
+                        if (statusCode == HttpStatusCode.OK)
                         {
-                            HttpResponseMessage response = httpClient.GetAsync(string.Format("https://api.manghui.net/t/getbanlist?time={0}", timestamp)).Result;
-                            HttpStatusCode statusCode = response.StatusCode;
-                            if (statusCode == HttpStatusCode.OK)
-                            {
-                                var raw = response.Content.ReadAsStringAsync().Result.Split('\n').ToList();
+                            var raw = response.Content.ReadAsStringAsync().Result.Split('\n').ToList();
 
-                                var content = raw.Select(str => str.Split('_')).Where(element => element.Length > 1);
+                            var content = raw.Select(str => str.Split('_')).Where(element => element.Length > 1);
 
-                                foreach (var single in content)
-                                    BanList.Add(new BanInfo { type = int.Parse(single[1]), value = single[0] });
+                            foreach (var single in content)
+                                BanList.Add(new BanInfo { type = int.Parse(single[1]), value = single[0] });
 
-                                if (long.TryParse(raw.Last() ?? "-1", out long servertime) & servertime != -1)
-                                    timestamp = servertime;
-                            }
+                            if (long.TryParse(raw.Last() ?? "-1", out long servertime) & servertime != -1)
+                                timestamp = servertime;
                         }
-                        catch (Exception ex)
-                        {
-                            DebugLog.LogError($"Downloading Banlist Error: {ex.Message}");
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugLog.LogError($"Downloading Banlist Error: {ex.Message}");
                     }
 
                     Thread.Sleep(60000);
