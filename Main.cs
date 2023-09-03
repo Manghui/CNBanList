@@ -27,7 +27,7 @@ namespace CNBanList
         [PluginPriority(PluginAPI.Enums.LoadPriority.Lowest)]
         public void OnEnabled()
         {
-            DownloadThread = new Thread(new ThreadStart(this.Downloader))
+            DownloadThread = new Thread(new ThreadStart(this.BanListDownloader))
             {
                 Priority = ThreadPriority.Lowest,
                 IsBackground = true,
@@ -37,7 +37,7 @@ namespace CNBanList
             EventManager.RegisterEvents(this);
         }
 
-        public void Downloader()
+        public void BanListDownloader()
         {
             try
             {
