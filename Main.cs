@@ -45,6 +45,8 @@ namespace CNBanList
             Keywords = Encoding.UTF8.GetString(Convert.FromBase64String(PluginConfig.Keywords_Strings)).ToLower().Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             EventManager.RegisterEvents(this);
+
+            Log.Info("Loaded");
         }
 
 
@@ -108,7 +110,7 @@ namespace CNBanList
             {
                 Timing.CallDelayed(2f, () =>
                 {
-                    ev.Player.Ban($"您的Steam名字中包含了极度敏感的词汇，处于安全考虑，您无法加入此服务器，\n" + $"请修改您的名字并重启游戏后尝试加入，如有疑问请联系服务器管理员", 120);
+                    ev.Player.Ban($"您的Steam昵称中包含了极度敏感的词汇，出于安全考虑，您无法加入此服务器，\n" + $"请修改您的昵称并重启游戏后尝试加入，如有疑问请联系服务器管理员", 120);
                     Log.Info($"玩家{ev.Player.Nickname}加入游戏被拦截，关键词：{skey}");
                 } );
             }
