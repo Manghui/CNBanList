@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using MEC;
+using Mirror;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
@@ -105,9 +106,11 @@ namespace CNBanList
 
             if (skey != null)
             {
-                ev.Player.Ban($"您的Steam名字中包含了极度敏感的词汇，处于安全考虑，您无法加入此服务器，\n" +
-                    $"请修改您的名字并重启游戏后尝试加入，如有疑问请联系服务器管理员", 120);
-                Log.Info($"玩家{ev.Player.Nickname}加入游戏被拦截，关键词：{skey}");
+                Timing.CallDelayed(2f, () =>
+                {
+                    ev.Player.Ban($"您的Steam名字中包含了极度敏感的词汇，处于安全考虑，您无法加入此服务器，\n" + $"请修改您的名字并重启游戏后尝试加入，如有疑问请联系服务器管理员", 120);
+                    Log.Info($"玩家{ev.Player.Nickname}加入游戏被拦截，关键词：{skey}");
+                } );
             }
         }
     }
