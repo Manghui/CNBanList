@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainConfig.cs" />
     <Compile Include="Main.cs" />
   </ItemGroup>
   <ItemGroup>
