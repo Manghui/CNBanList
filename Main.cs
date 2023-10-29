@@ -13,23 +13,23 @@ using System.Threading;
 
 namespace CNBanList
 {
-    public class BanInfo
-    {
-        public int type;
-        public string value;
-    }
-
     public class Main
     {
+        public class CNBanInfo
+        {
+            public int type;
+            public string value;
+        }
+
         private static long timestamp = -1;
 
         public static List<string> Keywords;
         public static Thread DownloadThread;
-        public static List<BanInfo> BanList;
+        public static List<CNBanInfo> BanList;
 
         [PluginConfig] public MainConfig PluginConfig;
 
-        [PluginEntryPoint("CNBanList", "1.0.1", "", "-")]
+        [PluginEntryPoint("CNBanList", "1.0.2", "", "-")]
         [PluginPriority(PluginAPI.Enums.LoadPriority.Lowest)]
         public void OnEnabled()
         {
@@ -46,7 +46,7 @@ namespace CNBanList
 
             EventManager.RegisterEvents(this);
 
-            Log.Info("Loaded");
+            Log.Info("Plugin Loaded");
         }
 
 
@@ -55,7 +55,7 @@ namespace CNBanList
             try
             {
                 HttpClient httpClient = new HttpClient();
-                BanList = new List<BanInfo>();
+                BanList = new List<CNBanInfo>();
                 while (true)
                 {
                     try
@@ -69,7 +69,7 @@ namespace CNBanList
                             var content = raw.Select(str => str.Split('_')).Where(element => element.Length > 1);
 
                             foreach (var single in content)
-                                BanList.Add(new BanInfo { type = int.Parse(single[1]), value = single[0] });
+                                BanList.Add(new CNBanInfo { type = int.Parse(single[1]), value = single[0] });
 
                             if (long.TryParse(raw.Last() ?? "-1", out long servertime) & servertime != -1)
                                 timestamp = servertime;
