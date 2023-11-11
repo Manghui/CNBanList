@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace CNBanList
@@ -86,10 +87,15 @@ namespace CNBanList
             catch (ThreadAbortException) { }
         }
 
+        public static bool IpMatch(string pattern, string ipAddress) => Regex.IsMatch(ipAddress, "^" + Regex.Escape(pattern).Replace("\\*", ".*") + "$");
+
         [PluginEvent]
         private void PlayerPreAuthing(PlayerPreauthEvent ev)
         {
-            if (BanList.Any(p => (p.type == 0 && p.value == ev.UserId) || (p.type == 1 && p.value == ev.IpAddress)))
+            if (BanList.Any(p => 
+                (p.type == 0 && p.value == ev.UserId) || 
+                (p.type == 1 && IpMatch(p.value, ev.IpAddress))
+            ))
             {
                 CustomLiteNetLib4MirrorTransport.ProcessCancellationData
                     (ev.ConnectionRequest, PreauthCancellationData.Reject(
