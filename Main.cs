@@ -5,6 +5,7 @@ using PluginAPI.Core.Attributes;
 using PluginAPI.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -41,9 +42,13 @@ namespace CNBanList
                 Name = "SCPSL: CNBanList Downloader"
             };
             DownloadThread.Start();
+            var filePath = FileManager.GetAppFolder(true, false, "") + "CNbans_keywords.txt";
 
+            if (!File.Exists(filePath))
+                File.WriteAllText(filePath, DefaultValue.Keywords);
+            
             //load keywords
-            Keywords = Encoding.UTF8.GetString(Convert.FromBase64String(PluginConfig.Keywords_Strings)).ToLower().Split(new char[1] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            Keywords = Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText(filePath))).ToLower().Replace("\r","").Split(new char[1] { '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             EventManager.RegisterEvents(this);
 
@@ -51,7 +56,7 @@ namespace CNBanList
         }
 
 
-        public void BanListDownloader()
+        public void BanListDownloader() 
         {
             try
             {
@@ -97,6 +102,7 @@ namespace CNBanList
                 (p.type == 1 && IpMatch(p.value, ev.IpAddress))
             ))
             {
+                AddBanLog($"{ev.UserId} | {ev.IpAddress} | 拒绝加入");
                 CustomLiteNetLib4MirrorTransport.ProcessCancellationData
                     (ev.ConnectionRequest, PreauthCancellationData.Reject(
                         $"[CN SL-AC] 你已被国服反作弊系统永久封禁  用户ID: [{ev.UserId}] IP地址: [{ev.IpAddress}]\n" +
@@ -114,12 +120,22 @@ namespace CNBanList
 
             if (skey != null)
             {
+                AddBanLog($"{ev.Player.UserId} | {ev.Player.Nickname} | 包含关键词: {skey}");
                 Timing.CallDelayed(2f, () =>
                 {
                     ev.Player.Ban($"您的Steam昵称中包含了极度敏感的词汇，出于安全考虑，您无法加入此服务器，\n" + $"请修改您的昵称并重启游戏后尝试加入，如有疑问请联系服务器管理员", 120);
                     Log.Info($"玩家{ev.Player.Nickname}加入游戏被拦截，关键词：{skey}");
                 } );
             }
+        }
+        private void AddBanLog(string content) {
+            var Folder = FileManager.GetAppFolder(true, false, "");
+            if (!Directory.Exists(Folder))
+                return;
+            try
+            {
+                File.AppendAllText(Folder + "CNban_logs.txt",$"{Server.Port} - {DateTime.Now.ToString("u")} - {content}\r\n");
+            } catch { }
         }
     }
 }
