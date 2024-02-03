@@ -100,11 +100,6 @@ namespace CNBanList
 
                     try
                     {
-                        bool fullyDownload = false;
-
-                        if (timestamp == -1)
-                            fullyDownload = true;
-
                         HttpResponseMessage response = httpClient.GetAsync(string.Format("https://api.manghui.net/t/getbanlist?time={0}&version=1", timestamp)).Result;
                         HttpStatusCode statusCode = response.StatusCode;
                         if (statusCode == HttpStatusCode.OK)
@@ -112,11 +107,10 @@ namespace CNBanList
                             var rawContent = response.Content.ReadAsStringAsync().Result;
                             var onlineList = rawContent.Split('\n').ToList();
 
-                            var content = onlineList.Select(str => str.Split('_')).Where(element => element.Length > 1);
-
-
-                            if (fullyDownload)
+                            if (onlineList[0] == "full")
                                 BanList.Clear();
+
+                            var content = onlineList.Select(str => str.Split('_')).Where(element => element.Length > 1);
 
                             foreach (var single in content)
                             {
@@ -130,13 +124,8 @@ namespace CNBanList
                                 }
                             }
 
-                            if (long.TryParse(onlineList.Last() ?? "-1", out long servertime) & servertime != -1) // -2 = fullyDownload -1 = keep timestamp
-                            {
-                                if (servertime == -2)
-                                    servertime = -1;
-
+                            if (long.TryParse(onlineList.Last() ?? "-1", out long servertime) & servertime != -1)
                                 timestamp = servertime;
-                            }
                         }
                     }
                     catch (HttpRequestException ex)
