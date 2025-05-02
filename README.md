@@ -1,1 +1,1 @@
-# CNBanList - 国服联盟封禁
+# CNBanList - 国服联盟黑名单系统
