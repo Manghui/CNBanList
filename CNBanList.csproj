@@ -93,8 +93,4 @@
       <HintPath>..\引用\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\CommandSystem\World\"/>
-    <Folder Include="Utils\"/>
-  </ItemGroup>
 </Project>
