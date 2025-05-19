@@ -1,0 +1,100 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>CNBanList</AssemblyName>
+    <RootNamespace>CNBanList</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net48" Version="1.0.3" PrivateAssets="All"/>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\引用\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>..\引用\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\引用\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\引用\Assembly-CSharp-Publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="Caress">
+      <HintPath>..\引用\Caress.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>..\引用\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="CommandSystem.Core">
+      <HintPath>..\引用\CommandSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DnsClient">
+      <HintPath>..\引用\DnsClient.dll</HintPath>
+    </Reference>
+    <Reference Include="LabApi">
+      <HintPath>..\引用\LabApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Leaf.xNet">
+      <HintPath>..\引用\Leaf.xNet.dll</HintPath>
+    </Reference>
+    <Reference Include="ManghuiAPI">
+      <HintPath>..\引用\ManghuiAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Mirror">
+      <HintPath>..\引用\Mirror-Publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="Mirror.Components">
+      <HintPath>..\引用\Mirror.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\引用\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="NorthwoodLib">
+      <HintPath>..\引用\NorthwoodLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\引用\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="Pooling">
+      <HintPath>..\引用\Pooling.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime"/>
+    <Reference Include="Unity.Burst">
+      <HintPath>..\引用\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>..\引用\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder">
+      <HintPath>..\引用\Unity.ProBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\引用\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\引用\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\引用\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\引用\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\引用\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\引用\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\CommandSystem\World\"/>
+    <Folder Include="Utils\"/>
+  </ItemGroup>
+</Project>

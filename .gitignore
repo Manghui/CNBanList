@@ -1,0 +1,5 @@
+*.sln
+bin
+obj
+.ds_store
+.vscode

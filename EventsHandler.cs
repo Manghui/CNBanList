@@ -16,24 +16,24 @@ internal class EventsHandler : CustomEventsHandler
 
         if (skey != null)
         {
-            Util.AddBanLog($"{ev.Player.UserId} | {ev.Player.Nickname} | °üº¬¹Ø¼ü´Ê: {skey}");
+            Util.AddBanLog($"{ev.Player.UserId} | {ev.Player.Nickname} | åŒ…å«å…³é”®è¯: {skey}");
             Timing.CallDelayed(2f, () =>
             {
-                ev.Player.Ban($"ÄúµÄSteamêÇ³ÆÖĞ°üº¬ÁË¼«¶ÈÃô¸ĞµÄ´Ê»ã£¬³öÓÚ°²È«¿¼ÂÇ£¬ÄúÎŞ·¨¼ÓÈë´Ë·şÎñÆ÷£¬\n" + $"ÇëĞŞ¸ÄÄúµÄêÇ³Æ²¢ÖØÆôÓÎÏ·ºó³¢ÊÔ¼ÓÈë£¬ÈçÓĞÒÉÎÊÇëÁªÏµ·şÎñÆ÷¹ÜÀíÔ±", 120);
-                Logger.Info($"Íæ¼Ò{ev.Player.Nickname}¼ÓÈëÓÎÏ·±»À¹½Ø£¬¹Ø¼ü´Ê£º{skey}");
+                ev.Player.Ban($"æ‚¨çš„Steamæ˜µç§°ä¸­åŒ…å«äº†æåº¦æ•æ„Ÿçš„è¯æ±‡ï¼Œå‡ºäºå®‰å…¨è€ƒè™‘ï¼Œæ‚¨æ— æ³•åŠ å…¥æ­¤æœåŠ¡å™¨ï¼Œ\n" + $"è¯·ä¿®æ”¹æ‚¨çš„æ˜µç§°å¹¶é‡å¯æ¸¸æˆåå°è¯•åŠ å…¥ï¼Œå¦‚æœ‰ç–‘é—®è¯·è”ç³»æœåŠ¡å™¨ç®¡ç†å‘˜", 120);
+                Logger.Info($"ç©å®¶{ev.Player.Nickname}åŠ å…¥æ¸¸æˆè¢«æ‹¦æˆªï¼Œå…³é”®è¯ï¼š{skey}");
             });
         }
     }
     public override void OnPlayerPreAuthenticating(PlayerPreAuthenticatingEventArgs ev)
     {
         var hit = Util.IsInBlacklist(ev.UserId, ev.IpAddress);
-        if (hit.Item1 == true)
+        if (hit != null)
         {
-            Util.AddBanLog($"{ev.UserId} | {ev.IpAddress} | À¹½Ø" + (hit.Item2 != null ? $" | Ô­Òò£º{hit.Item2}" : ""));
+            Util.AddBanLog($"{ev.UserId} | {ev.IpAddress} | æ‹¦æˆª" + (hit.reason != null ? $" | {(hit.type != 0 ? "IP Ban" : "UserId Ban" )} | åŸå› ï¼š{hit.reason}" : ""));
             ev.RejectCustom(
-                $"[CN SL-AC] ÄãÒÑ±»¹ú·ş·â½ûÏµÍ³¼ì²â²¢ÓÀ¾Ã·â½û  ÓÃ»§ID: [{ev.UserId}] IPµØÖ·: [{ev.IpAddress}] {(hit.Item2 != null ? $"Ô­Òò: {hit.Item2}" : "")} \n" +
-                $"ÄúÔÚÓÎÏ·ÄÚÍâÊ¹ÓÃÁË°üÀ¨µ«²»ÏŞÓÚÍâ¹Ò£¬BUGµÈ·Ç·¨ÊÖ¶Î£¬Ôâµ½¾Ù±¨²¢ºËÊµºó·â½û£¬²¢ÓÀ¾ÃÎŞ·¨¼ÓÈëÈÎºÎ²ÎÓë¹ú·şÁªÃË·â½ûµÄ·şÎñÆ÷¡£\n" +
-                $"¾ßÌåÏêÇéÇë·ÃÎÊ ac.cnscpsl.cn   ÈçÓĞÒÉÎÊÇë½ØÍ¼ÁªÏµ·şÎñÆ÷¹ÜÀíÔ±\n");
+                $"[CN SL-AC] ä½ å·²è¢«å›½æœå°ç¦ç³»ç»Ÿæ£€æµ‹å¹¶æ°¸ä¹…å°ç¦  ç”¨æˆ·ID: [{ev.UserId}] IPåœ°å€: [{ev.IpAddress}] {(hit.reason != null ? $"ä»£ç : {hit.reason}" : "")} \n" +
+                $"æ‚¨å¯èƒ½åœ¨æ¸¸æˆå†…å¤–ä½¿ç”¨äº†åŒ…æ‹¬ä½†ä¸é™äºå¤–æŒ‚ï¼Œæ¶æ„BUGç­‰éæ³•æ‰‹æ®µï¼Œé­åˆ°ä¸¾æŠ¥å¹¶æ ¸å®åå°ç¦ï¼Œæ°¸ä¹…æ— æ³•åŠ å…¥ä»»ä½•å›½æœè”ç›Ÿå°ç¦çš„æœåŠ¡å™¨ã€‚\n" +
+                $"å­˜åœ¨è¯¯åˆ¤æˆ–æœ‰ç–‘é—®ï¼Ÿè¯·è®¿é—® ac.cnscpsl.cn æŸ¥çœ‹å¸¸è§è§£å†³æ–¹æ¡ˆ");
         }
     }
 

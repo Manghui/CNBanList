@@ -24,7 +24,7 @@ internal class CNBanList : Plugin
 
     public override string Author { get; } = "m";
 
-    public override Version Version { get; } = new Version(2, 0, 0, 0);
+    public override Version Version { get; } = new Version(2, 0, 1, 0);
 
     public override Version RequiredApiVersion { get; } = new Version(LabApiProperties.CompiledVersion);
 
@@ -64,7 +64,7 @@ internal class CNBanList : Plugin
         
         CustomHandlersManager.RegisterEventsHandler(Events);
 
-        Logger.Info($"Plugin Loaded, Local Kewords Count: {Keywords.Count}");
+        Logger.Info($"插件已加载, 本地关键词数量: {Keywords.Count}");
     }
 
     public override void Disable()
@@ -98,7 +98,7 @@ internal class CNBanList : Plugin
                             string? userId = null, ip = null;
                             if (type == 0) userId = single[0]; else ip = single[0];
 
-                            if (!Util.IsInBlacklist(userId, ip).Item1)
+                            if (Util.IsInBlacklist(userId, ip) == null)
                                 BanList.Add(new CNBanInfo { type = type, value = single[0], reason = reason });
                         }
 

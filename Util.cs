@@ -46,14 +46,14 @@ namespace CNBanList
             catch { }
         }
 
-        public static (bool, string?) IsInBlacklist(string? userId, string? ip)
+        public static CNBanInfo? IsInBlacklist(string? userId, string? ip)
         {
             var item = CNBanList.BanList.FirstOrDefault(p =>
                 (userId != null && p.type == 0 && p.value == userId) ||
                 (ip != null && p.type == 1 && IpMatch(p.value, ip))
             );
-            if (item == null) return (false, null);
-            return (true, item.reason);
+            if (item == null) return null;
+            return item;
         }
     }
 }
