@@ -24,7 +24,7 @@ internal class CNBanList : Plugin
 
     public override string Author { get; } = "m";
 
-    public override Version Version { get; } = new Version(2, 0, 1, 0);
+    public override Version Version { get; } = new Version(2, 0, 2, 0);
 
     public override Version RequiredApiVersion { get; } = new Version(LabApiProperties.CompiledVersion);
 

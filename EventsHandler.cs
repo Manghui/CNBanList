@@ -29,10 +29,12 @@ internal class EventsHandler : CustomEventsHandler
         var hit = Util.IsInBlacklist(ev.UserId, ev.IpAddress);
         if (hit != null)
         {
-            Util.AddBanLog($"{ev.UserId} | {ev.IpAddress} | 拦截" + (hit.reason != null ? $" | {(hit.type != 0 ? "IP Ban" : "UserId Ban" )} | 原因：{hit.reason}" : ""));
+            Util.AddBanLog($"{ev.UserId} | {ev.IpAddress} | 拦截 | " + (hit.type != 0 ? "IP Ban" : "UserId Ban" ) + (hit.reason != null ? $"  | 原因：{hit.reason}" : ""));
             ev.RejectCustom(
-                $"[CN SL-AC] 你已被国服封禁系统检测并永久封禁  用户ID: [{ev.UserId}] IP地址: [{ev.IpAddress}] {(hit.reason != null ? $"代码: {hit.reason}" : "")} \n" +
-                $"您可能在游戏内外使用了包括但不限于外挂，恶意BUG等非法手段，遭到举报并核实后封禁，永久无法加入任何国服联盟封禁的服务器。\n" +
+                $"[CN SL-AxC] 你已被国服封禁系统检测并永久封禁  \n"+
+                $"用户ID: [{ev.UserId}] IP地址: [{ev.IpAddress}] {(hit.reason != null ? $"代码: {hit.reason}" : "")} \n" +
+                $"您可能在游戏内外使用了包括但不限于外挂，恶意BUG等非法手段，\n"+
+                $"遭到举报并核实后封禁，永久无法加入任何国服联盟封禁的服务器。\n" +
                 $"存在误判或有疑问？请访问 ac.cnscpsl.cn 查看常见解决方案");
         }
     }
